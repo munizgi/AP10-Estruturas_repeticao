@@ -71,9 +71,42 @@ END $$;
 
 
 
+-- QUESTÃO 4
+-- Ler um número indeterminado de valores de pares M. M e, e N N (pare quando qualquer um desses valores for menor ou igual a zero). 
+-- Para cada par, imprima a sequência do menor para o maior (incluindo ambos) 
+-- Para cada par, imprima a a soma dos números inteiros consecutivos entre eles (incluindo ambos).
 
-
-
+DO $$
+DECLARE
+    n1 INT;
+    n2 INT;
+    soma INT;
+    temp INT;
+    i INT;
+    sequencia INT[];
+BEGIN
+    LOOP
+        n1 := fn_valor_aleatorio_entre(0,10);
+        n2 := fn_valor_aleatorio_entre(0,10);
+        RAISE NOTICE 'n1 = %, n2 = %', n1, n2;
+        EXIT WHEN n1 <= 0 OR n2 <= 0;
+        -- garante ordem crescente
+        IF n1 > n2 THEN
+            temp := n1;
+            n1 := n2;
+            n2 := temp;
+        END IF;
+        soma := 0;
+        sequencia := ARRAY[]::INT[]; -- inicializa array vazio
+        FOR i IN n1..n2 LOOP
+            sequencia := array_append(sequencia, i); -- adiciona no array
+            soma := soma + i;
+        END LOOP;
+        RAISE NOTICE 'Sequência: %', sequencia;
+        RAISE NOTICE 'Soma: %', soma;
+    END LOOP;
+END;
+$$;
 
 
 
